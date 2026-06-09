@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+
+venv/
+.env
+
+data/videos/
+data/faces/
+
+outputs/
+
+attendance.db
+
+*.pkl
