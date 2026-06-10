@@ -4,7 +4,7 @@ __pycache__/
 venv/
 .env
 
-data/videos/
+data/video/
 data/faces/
 
 outputs/
