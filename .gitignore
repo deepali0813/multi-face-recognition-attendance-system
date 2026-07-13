@@ -12,3 +12,25 @@ outputs/
 attendance.db
 
 *.pkl
+# Python
+
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Output
+output/
+Recognition_Results/
+
+# OS
+.DS_Store
+Thumbs.db
