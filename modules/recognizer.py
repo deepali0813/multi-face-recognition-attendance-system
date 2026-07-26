@@ -28,12 +28,8 @@ app.prepare(ctx_id=-1)
 def recognize_face(aligned_face):
 
     """
-    Recognize an aligned face.
-
-    Returns
-    -------
-    student_name
-    similarity
+    Recognize an aligned face using multiple gallery embeddings
+    (Maximum Cosine Similarity).
     """
 
     if aligned_face is None:
@@ -44,26 +40,41 @@ def recognize_face(aligned_face):
     if len(faces) == 0:
         return None, 0.0
 
-    embedding = faces[0].normed_embedding
+    probe_embedding = faces[0].normed_embedding
+    probe_embedding = probe_embedding / np.linalg.norm(probe_embedding)
 
     best_student = None
     best_similarity = -1
 
-    for student, gallery_embedding in gallery_database.items():
+    # -------------------------------------------------------
+    # Compare against every student's embeddings
+    # -------------------------------------------------------
 
-        similarity = np.dot(
-            embedding,
-            gallery_embedding
-        )
+    for student, gallery_embeddings in gallery_database.items():
 
-        if similarity > best_similarity:
+        student_best = -1
 
-            best_similarity = similarity
+        for gallery_embedding in gallery_embeddings:
+
+            similarity = np.dot(
+                probe_embedding,
+                gallery_embedding
+            )
+
+            if similarity > student_best:
+                student_best = similarity
+
+        if student_best > best_similarity:
+            best_similarity = student_best
             best_student = student
 
-    THRESHOLD = 0.50
+    # -------------------------------------------------------
+    # Recognition Threshold
+    # -------------------------------------------------------
+
+    THRESHOLD = 0.40
 
     if best_similarity < THRESHOLD:
-      return "Unknown", float(best_similarity)
+        return "Unknown", float(best_similarity)
 
-    return best_student, float(best_similarity)  
+    return best_student, float(best_similarity)
