@@ -133,7 +133,7 @@ export default function ProcessAttendancePage() {
             },
 
             // Your AI pipeline can take a while
-            timeout: 30 * 60 * 1000,
+            timeout: 0,
           }
         );
 

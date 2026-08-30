@@ -3,11 +3,14 @@ __pycache__/
 
 venv/
 .env
+node_modules/
+.next/
+out/
 
 data/video/
 data/faces/
 
-outputs/
+output/
 
 attendance.db
 
